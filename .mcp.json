@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "mamba-creator-profile-reader": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@mambalabsdev/mcp-creator-profile-reader"
+      ],
+      "env": {
+        "APIFY_TOKEN": "your-apify-token"
+      }
+    }
+  }
+}
