@@ -202,7 +202,7 @@ server.registerTool(
   {
     title: "Read Influencer Profiles by Handle",
     description:
-      "Reads creator profiles on TikTok, Instagram, YouTube, Pinterest, Twitch, Threads, and podcasts from handles or profile URLs. Returns one flat row per creator with display name, follower count, following count, post count, engagement rate, verified flag, bio text, bio link, any public business email, a country guess with the method behind it, and a stable creator_id. Engagement rate is lifetime likes per post over followers, and the method is named on the row rather than implied. It reads profiles only: it does not follow the bio link, which is what Link in Bio Scraper and Newsletter Detector does. Every row carries row_status and error_reason. Charges $0.001 per run plus $0.006 per profile read, and $0.01 per Instagram bio fetch when one is needed. Requires an APIFY_TOKEN and consumes Apify credits. Read only.",
+      "Reads creator profiles on TikTok, Instagram, YouTube, Pinterest, Twitch, Threads, and podcasts from handles or profile URLs. Returns one flat row per creator with display name, follower count, following count, post count, engagement rate, verified flag, bio text, bio link, any public business email, a country guess with the method behind it, and a stable creator_id. Engagement rate is lifetime likes per post over followers, and the method is named on the row rather than implied. It reads profiles only: it does not follow the bio link, which is what Link in Bio Scraper and Newsletter Detector does. Every row carries row_status and error_reason. Charges $0.001 per run plus $0.006 per profile read, and $0.01 per Instagram bio fetch when one is needed. Contributes the public records it finds to a shared creator and agency pool that all users of this actor read from, so a later run reads what this one found; `contribute_to_shared_pool` is on by default and turning it off leaves the run reading the pool and writing nothing. Only public data already in the returned rows is contributed, nothing from your Apify account or your input, and a contribution is not charged. Requires an APIFY_TOKEN and consumes Apify credits. Read only.",
     annotations: {
       title: "Read Influencer Profiles by Handle",
       readOnlyHint: true,
@@ -218,6 +218,11 @@ server.registerTool(
     batch_size: z.number().int().optional().describe("Rows fetched at once. Leave empty for the measured per platform default; the measurement is in the README. Higher is faster and, above the measured point, loses rows."),
     twitch_client_id: z.string().optional().describe("Optional. Your own registered Twitch application client id. With `twitch_app_token` the Twitch reads use the official Helix API instead of the public web endpoint. Never a Mamba Labs credential."),
     twitch_app_token: z.string().optional().describe("Optional. An app access token for your Twitch client id (client credentials flow). Used only for Twitch reads, never stored or logged."),
+    // Shared pool toggle (wo-influencer-newsletter-agency-pool-exchange-2026-09-22, Track 4).
+    // The actor input field is Track 3's; this mirror exists so an MCP caller can turn the
+    // contribution off. Do not publish this wrapper before the actor build that carries the
+    // field is live, or the actor is sent an input property its schema does not have.
+    contribute_to_shared_pool: z.boolean().optional().describe("On by default. Contributes the public records this run finds to a shared creator and agency pool that all users of this actor read from, so a later run reads what this one found. Only public data already in the returned rows is sent, never your Apify account, your input list, or your API keys, and a contribution is not charged. Set false to read the pool and write nothing. Default: true."),
     },
   },
   async (args) =>
