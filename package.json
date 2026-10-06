@@ -1,7 +1,7 @@
 {
   "name": "@mambalabsdev/mcp-creator-profile-reader",
   "displayName": "Influencer Profile Scraper",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "MCP server for the Mamba Labs Influencer Profile Scraper actor on Apify. Creator handles or profile URLs in, one profile row out per creator.",
   "type": "module",
   "bin": {
