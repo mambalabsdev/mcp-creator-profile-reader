@@ -1,7 +1,7 @@
 {
   "name": "mcp-creator-profile-reader",
   "displayName": "Influencer Profile Scraper",
-  "version": "1.0.0",
+  "version": "1.2.0",
   "description": "Read influencer profiles by handle across seven platforms: followers, engagement, bio, and bio link.",
   "author": {
     "name": "Mamba Labs",
